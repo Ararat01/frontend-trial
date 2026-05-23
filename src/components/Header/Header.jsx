@@ -213,9 +213,9 @@ const Header = () => {
             }}
           >
             {searchText ? (
-              <CloseIcon size={"16px"} />
+              <CloseIcon size={"24px"} />
             ) : (
-              <SearchIcon size={"16px"} />
+              <SearchIcon size={"24px"} />
             )}
           </button>
         </form>

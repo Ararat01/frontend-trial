@@ -10,6 +10,8 @@
 .logo {
   display: block;
   max-width: 180px;
+  width: 40vw;
+  min-width: 150px;
 }
 
 .logo-link {
@@ -79,7 +81,7 @@
 }
 .dropDown ul {
   list-style: none;
-  padding: 1.5rem;
+  padding: 1rem 1.5rem;
   margin: 0;
   text-align: left;
 }
@@ -120,11 +122,10 @@
 .search button {
   display: inline-flex;
   align-items: center;
-  jusctify-content: center;
+  justify-content: center;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.5rem;
   position: absolute;
   z-index: 2;
 }
@@ -262,6 +263,7 @@
 @media (max-width: 768px) {
   .header-top {
     padding-bottom: 1rem;
+    gap: 1rem;
   }
   .mobile-menu {
     display: block;
