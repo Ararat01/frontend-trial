@@ -10,15 +10,14 @@
   align-items: center;
   z-index: 9999;
   animation: fadeIn 0.3s ease;
- 
 }
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 .close {
   align-self: flex-end;
@@ -49,6 +48,7 @@
   width: 100%;
   overflow: hidden;
   aspect-ratio: 720 / 460;
+  min-height: 200px;
 }
 
 .modal .imageContainer img {
@@ -114,5 +114,6 @@
   .modal {
     max-width: 100%;
     border-radius: 0.5rem 0.5rem 0 0;
+    padding-bottom: 2.5rem;
   }
 }
