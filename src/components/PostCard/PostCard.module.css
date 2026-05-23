@@ -34,6 +34,7 @@
   font-size: 1.5rem;
   line-height: 1.2;
   letter-spacing: 0px;
+  color: var(--black-clr);
 }
 .postButton p {
   font-weight: 400;
