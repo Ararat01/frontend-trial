@@ -4,6 +4,7 @@ import ArrowIcon from "../../icons/ArrowIcon";
 import SearchIcon from "./../../icons/SearchIcon";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import CloseIcon from "../../icons/CloseIcon";
+import BurgerIcon from "./../../icons/BurgerIcon";
 
 const dropDownItems = [
   {
@@ -60,8 +61,10 @@ const Header = () => {
   const [hidden, setHidden] = useState(false);
   const [inputState, setInputState] = useState(false);
   const [searchParams] = useSearchParams();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const query = searchParams.get("q");
   const [searchText, setSearchText] = useState(query || "");
+  const [openIndex, setOpenIndex] = useState(null);
   const navigate = useNavigate();
 
   const lastScrollY = useRef(0);
@@ -105,8 +108,83 @@ const Header = () => {
 
   return (
     <header className={`header ${hidden ? "header--hidden" : ""}`}>
-      <div className="header-top container">
-        <div style={{ flex: 1 }}></div>
+      <div
+        className={`header-top container ${inputState ? "search-active" : ""}`}
+      >
+        <div className="mobile">
+          <div className="mobile-menu">
+            <button
+              className="burger-button"
+              onClick={() => setMobileMenuOpen(true)}
+            >
+              <BurgerIcon />
+            </button>
+            <div
+              className={`overlay ${mobileMenuOpen ? "open" : ""}`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <div
+                onClick={(e) => e.stopPropagation()}
+                className={`mobile-nav ${mobileMenuOpen ? "open" : ""}`}
+              >
+                <div className="mobile-nav-header">
+                  <Link
+                    to="/"
+                    className="logo-link"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <img src="/logo.png" alt="Logo" className="logo" />
+                  </Link>
+                  <button
+                    className="close-button"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <CloseIcon />
+                  </button>
+                </div>
+                <div className="mobile-nav-content">
+                  <div className="mobile-nav-content">
+                    {dropDownItems.map((item, index) => (
+                      <div key={index} className="mobile-nav-item">
+                        <button
+                          className="mobile-nav-item-button"
+                          onClick={() =>
+                            setOpenIndex(openIndex === index ? null : index)
+                          }
+                        >
+                          <span>{item.label}</span>
+                          <ArrowIcon
+                            size={10}
+                            rotate={openIndex === index ? 180 : 0}
+                          />
+                        </button>
+
+                        <div
+                          className={`mobile-dropDown ${
+                            openIndex === index ? "opened" : ""
+                          }`}
+                        >
+                          {item.dropDown.map((dropItem, dropIndex) => (
+                            <Link
+                              key={dropIndex}
+                              to={dropItem.href}
+                              onClick={() => setMobileMenuOpen(false)}
+                            >
+                              {dropItem.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                    <a className="mobile-nav-item-button" href="/buy">
+                      <span>Buy Now</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <Link to="/" className="logo-link">
           <img src="/logo.png" alt="Logo" className="logo" />
         </Link>
@@ -117,9 +195,7 @@ const Header = () => {
           }}
         >
           <input
-            style={{
-              visibility: inputState || searchText ? "visible" : "hidden",
-            }}
+            className={inputState || searchText ? "visible" : "hidden"}
             type="text"
             placeholder="Search..."
             value={searchText}
