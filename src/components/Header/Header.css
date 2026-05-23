@@ -110,3 +110,27 @@
 .nav button:hover .dropDown {
   display: block;
 }
+
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+.search button {
+  display: inline-flex;
+  align-items: center;
+  jusctify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.search input {
+  width: 200px;
+  padding: 0.5rem;
+  border: 1px solid var(--gray-clr);
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+}

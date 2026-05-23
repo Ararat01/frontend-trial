@@ -9,7 +9,7 @@ const ArrowIcon = ({ size = 24, color = "#000", rotate = 0 }) => {
       style={{ transform: `rotate(${rotate}deg)` }}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M1 1L5 5L9 1" stroke={color} stroke-linecap="square" />
+      <path d="M1 1L5 5L9 1" stroke={color} strokeLinecap="square" />
     </svg>
   );
 };
