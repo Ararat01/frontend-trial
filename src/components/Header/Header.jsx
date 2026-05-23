@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import "./Header.css";
 import ArrowIcon from "../../icons/ArrowIcon";
 import SearchIcon from "./../../icons/SearchIcon";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
+import CloseIcon from "../../icons/CloseIcon";
 
 const dropDownItems = [
   {
@@ -58,7 +59,9 @@ const dropDownItems = [
 const Header = () => {
   const [hidden, setHidden] = useState(false);
   const [inputState, setInputState] = useState(false);
-  const [searchText, setSearchText] = useState("");
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("q");
+  const [searchText, setSearchText] = useState(query || "");
   const navigate = useNavigate();
 
   const lastScrollY = useRef(0);
@@ -93,12 +96,10 @@ const Header = () => {
     };
   }, []);
 
-  const handleSearch = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (inputState) {
-      setInputState(false);
       navigate(`/?q=${encodeURIComponent(searchText)}`);
-    } else {
-      setInputState(true);
     }
   };
 
@@ -106,23 +107,40 @@ const Header = () => {
     <header className={`header ${hidden ? "header--hidden" : ""}`}>
       <div className="header-top container">
         <div style={{ flex: 1 }}></div>
-        <img src="/logo.png" alt="Logo" className="logo" />
+        <Link to="/" className="logo-link">
+          <img src="/logo.png" alt="Logo" className="logo" />
+        </Link>
         <form
           className="search"
           onSubmit={(e) => {
-            e.preventDefault();
-            handleSearch();
+            handleSubmit(e);
           }}
         >
           <input
-            style={{ visibility: inputState ? "visible" : "hidden" }}
+            style={{
+              visibility: inputState || searchText ? "visible" : "hidden",
+            }}
             type="text"
             placeholder="Search..."
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <button type="button" onClick={handleSearch}>
-            <SearchIcon size={16} />
+          <button
+            type="button"
+            onClick={() => {
+              if (inputState) {
+                setSearchText("");
+                navigate("/");
+              } else {
+                setInputState(true);
+              }
+            }}
+          >
+            {searchText ? (
+              <CloseIcon size={"16px"} />
+            ) : (
+              <SearchIcon size={"16px"} />
+            )}
           </button>
         </form>
       </div>
@@ -137,7 +155,7 @@ const Header = () => {
                 <ul>
                   {item.dropDown.map((dropItem, dropIndex) => (
                     <li key={dropIndex}>
-                      <a href={dropItem.href}>{dropItem.label}</a>
+                      <Link to={dropItem.href}>{dropItem.label}</Link>
                       <ArrowIcon size={8} rotate={-90} />
                     </li>
                   ))}

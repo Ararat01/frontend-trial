@@ -11,9 +11,13 @@ const Home = () => {
   useEffect(() => {
     getPosts().then((data) => {
       setPosts(
-        data.filter(
-          (post) => post.title.toLowerCase().includes(query.toLowerCase()) || post.text.toLowerCase().includes(query.toLowerCase()),
-        ),
+        query
+          ? data.filter(
+              (post) =>
+                post.title.toLowerCase().includes(query.toLowerCase()) ||
+                post.text.toLowerCase().includes(query.toLowerCase()),
+            )
+          : data,
       );
     });
   }, [query]);
@@ -21,17 +25,21 @@ const Home = () => {
     <section className={`${s.posts} container`}>
       {posts.map((post, i) => (
         <article key={i} className={s.post}>
-          <img src={post.img} srcSet={post.img_2x} alt={post.title} />
-          <span className={s.tag}>{post.tags}</span>
-          <h2>{post.title}</h2>
-          <div className={s.info}>
-            <span className={s.author}>{post.autor}</span>
-            <span className="dot">•</span>
-            <span>{post.date}</span>
-            <span className="dot">•</span>
-            <span>{post.views} views</span>
-          </div>
-          <p>{post.text}</p>
+          <button className={s.postButton} onClick={() => {}}>
+            <div className={s.imageContainer}>
+              <img src={post.img} srcSet={post.img_2x} alt={post.title} />
+            </div>
+            <span className={s.tag}>{post.tags}</span>
+            <h2>{post.title}</h2>
+            <div className={s.info}>
+              <span className={s.author}>{post.autor}</span>
+              <span className="dot">•</span>
+              <span>{post.date}</span>
+              <span className="dot">•</span>
+              <span>{post.views} views</span>
+            </div>
+            <p>{post.text}</p>
+          </button>
         </article>
       ))}
     </section>
