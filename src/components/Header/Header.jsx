@@ -207,6 +207,7 @@ const Header = () => {
               if (inputState) {
                 setSearchText("");
                 navigate("/");
+                setInputState(false);
               } else {
                 setInputState(true);
               }
